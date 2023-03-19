@@ -1,7 +1,7 @@
 # Chat
 
 ## Introduction
-Create a chat using UDP Protocol that allows clients to communicate with each other. All the messages in the chat sent to the server that manage the chat.
+In this project, we would like to implement a simple chat using UDP Protocol. Our chat will behave in a similar way to a WhatsApp group, where any member of the group can write, and every message someone writes is sent to all members of the group. Please note, when someone sends a message to the group - the message is sent to the server immediately. However, the server will send the appropriate messages to clients only when they contact the server.
 
 ## Table of contents
 * [General Information](#general-information)
@@ -11,10 +11,23 @@ Create a chat using UDP Protocol that allows clients to communicate with each ot
 
 
 ## General Information
-This project gets one vector from the user. If the user enters invalid values (such as empty data, only spaces, data that includes characters that aren't numbers, etc), the program will be closed. If the user enters valid data, such as a vector that includes only numbers (integer, double or negative numbers), the data will be saved into a vector.
-If the data in the database is invalid (such as when the vector is not only numeric or double values, not equal to the size of the vector that entered by the user), the program will be closed.
-The algorithm will check which of the tagged vectors in the database are the K vectors closest to the new vector (this k we get from the user as an argument). The distance between the new vector and each of the vectors from the database is calculated using one of five algorithms (euclidean distance- AUC, taxicab geometry- MAN, Chebyshev distance- CHB, Canberra distance- CAN, or Minkowski distance- MIN), depending on the algorithm that the user entered as an argument.
-Then, the algorithm takes the K closest ("similar") vectors to the input and checks what their labeling is. The classification of the new vector is based on the most common labeling among the k vectors. In the end, the program prints this classification to the terminal.
+This project contains two parts: a server and a client.
+
+The server can receive 5 types of messages:
+
+Registration: The customer sending this message wishes to join the group chat. The message will be in the following format: 1 [Name] When the server receives such a message, it adds the sender to the group. This means that:
+The server saves the client's name and its socket details.
+The server sends the message to all participants in the group: [Name] has joined
+The server sends the joined client the names of the group members.
+Sending a message: A customer wants to send a message to all members of the group. The message will be in the following format: 2 [Message] When the server receives such a message, it sends the message to all members of the group: [Name]: [Message]
+
+Name change: The client sending this message wishes to change his name in the group. The message will be in the following format: 3 [Name] When the server receives this message, it sends the message to all members of the group: [old name] changed his name to [new name]
+
+Leaving the group: The customer sending this message wishes to leave the group (and in particular, to stop receiving updates from it). The message will be in the following format: 4 When the server receives this message, it sends the message to all members of the group: [Name] has left the group
+
+Receiving new information: The client sending this message requests the server to send him all the messages sent to him since the last update. The message will be in the following format: 5 When the server receives this message, it sends the client back one message containing all the messages that should have been sent to it since the previous time.
+
+If the client sent a message to the server that is not according to what was defined above, the server must ignore the message and return the request: "Illegal message" to the client.
 
 ## Installation
 Before installing this project, you need to install on your computer:
