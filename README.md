@@ -15,17 +15,18 @@ This project contains two parts: a server and a client.
 
 The server can receive 5 types of messages:
 
-Registration: The customer sending this message wishes to join the group chat. The message will be in the following format: 1 [Name] When the server receives such a message, it adds the sender to the group. This means that:
-The server saves the client's name and its socket details.
-The server sends the message to all participants in the group: [Name] has joined
-The server sends the joined client the names of the group members.
-Sending a message: A customer wants to send a message to all members of the group. The message will be in the following format: 2 [Message] When the server receives such a message, it sends the message to all members of the group: [Name]: [Message]
+1. Registration: The customer sending this message wishes to join the group chat. The message will be in the following format: 1 [Name] When the server receives such a message, it adds the sender to the group. This means that:
+* The server saves the client's name and its socket details.
+* The server sends the message to all participants in the group: [Name] has joined
+* The server sends the joined client the names of the group members.
 
-Name change: The client sending this message wishes to change his name in the group. The message will be in the following format: 3 [Name] When the server receives this message, it sends the message to all members of the group: [old name] changed his name to [new name]
+2. Sending a message: A customer wants to send a message to all members of the group. The message will be in the following format: 2 [Message] When the server receives such a message, it sends the message to all members of the group: [Name]: [Message]
 
-Leaving the group: The customer sending this message wishes to leave the group (and in particular, to stop receiving updates from it). The message will be in the following format: 4 When the server receives this message, it sends the message to all members of the group: [Name] has left the group
+3. Name change: The client sending this message wishes to change his name in the group. The message will be in the following format: 3 [Name] When the server receives this message, it sends the message to all members of the group: [old name] changed his name to [new name]
 
-Receiving new information: The client sending this message requests the server to send him all the messages sent to him since the last update. The message will be in the following format: 5 When the server receives this message, it sends the client back one message containing all the messages that should have been sent to it since the previous time.
+4. Leaving the group: The customer sending this message wishes to leave the group (and in particular, to stop receiving updates from it). The message will be in the following format: 4 When the server receives this message, it sends the message to all members of the group: [Name] has left the group
+
+5. Receiving new information: The client sending this message requests the server to send him all the messages sent to him since the last update. The message will be in the following format: 5 When the server receives this message, it sends the client back one message containing all the messages that should have been sent to it since the previous time.
 
 If the client sent a message to the server that is not according to what was defined above, the server must ignore the message and return the request: "Illegal message" to the client.
 
